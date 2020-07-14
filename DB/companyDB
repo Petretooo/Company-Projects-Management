@@ -1,0 +1,54 @@
+use companydb;
+
+	create table employees (
+       id integer not null auto_increment,
+        fist_name varchar(255) not null,
+        last_name varchar(255) not null,
+        phone_number varchar(255) not null,
+        email varchar(255) not null,
+        nationality varchar(255) not null,
+        date_of_birth datetime(6),
+        position varchar(255) not null,
+        salary double precision,
+        primary key (id)
+    ) ;
+        insert into employees(fist_name,last_name,phone_number,email,nationality,date_of_birth,position,salary)
+        values('Peter', 'Angelov', '0885236534', 'petarAngelov@gmail.com', 'Bulgarian', '99-10-31','Software engineer', 5000);
+    
+	create table managers (
+       id integer not null auto_increment,
+        fist_name varchar(255) not null,
+        last_name varchar(255) not null,
+        phone_number varchar(255) not null,
+        email varchar(255),
+        nationality varchar(255) not null,
+        salary double precision,
+        primary key (id)
+    ) ;
+
+    
+    create table projects (
+       id integer not null auto_increment,
+       name varchar(255) not null,
+        description varchar(255),
+        manager_id integer,
+        primary key (id),
+        foreign key (manager_id) references managers(id) on delete cascade 
+    );
+    
+    insert into projects(name,description)
+    values('Bank System', 'We should create bank system for BNP Parribas');
+    
+    create table project_employees (
+		project_name varchar(255) not null,
+        project_id integer not null,
+        employee_name varchar(255) not null,
+        employee_id integer not null,
+        primary key (project_id, employee_id),
+        foreign key (project_id) REFERENCES projects(id) on delete cascade,
+        foreign key (employee_id) references employees(id) on delete cascade
+    ) ;
+    
+    insert into project_employees(project_name,project_id,employee_name,employee_id)
+    values('Bank System', 1, 'fist_name', 2);
+    
